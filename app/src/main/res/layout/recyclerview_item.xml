@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/taskTitel"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/taskDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/taskTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/taskDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:textSize="20sp" />
+        <CheckBox
+            android:id="@+id/checkbox_meat"
+            android:layout_width="43dp"
+            android:layout_height="wrap_content"
+            android:onClick="onCheckboxClicked" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
