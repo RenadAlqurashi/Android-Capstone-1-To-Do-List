@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment3">
+    app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.todo_list_app.ui.main.MainFragment"
-        android:label="fragment_main"
-        tools:layout="@layout/fragment_main" >
+        android:label="fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_newTaskFragment"
             app:destination="@id/newTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/newTaskFragment"
-        android:name="com.example.todo_list_app.NewTaskFragment"
+        android:name="com.example.todo_list_app.ui.newTask.NewTaskFragment"
         android:label="fragment_new_task"
-        tools:layout="@layout/fragment_new_task" >
+        tools:layout="@layout/fragment_new_task">
         <action
             android:id="@+id/action_newTaskFragment_to_mainFragment"
             app:destination="@id/mainFragment" />

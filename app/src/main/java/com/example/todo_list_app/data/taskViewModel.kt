@@ -3,18 +3,19 @@ package com.example.todo_list_app.data
 import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-class taskViewModel(application: Application) : AndroidViewModel(application){
-    private val readAllData: LiveData<List<Task>>
-    private val repo:Repo
+class taskViewModel(context: Application) : AndroidViewModel(context){
+    private val repo = Repo(context)
 
-    init {
-        val taskDao =AppDataBase.getAppDataBase(application).taskDao()
-        repo = Repo(taskDao)
-        readAllData=repo.readAllData
+    fun getAllTasks(): MutableLiveData<List<Task>>{
+        val tasks = MutableLiveData<List<Task>>()
+        viewModelScope.launch {
+            tasks.postValue(repo.getAllTasks())
+        }
+        return tasks
     }
-
     fun insert(task:Task){
         viewModelScope.launch (Dispatchers.IO){
             repo.insert(task)

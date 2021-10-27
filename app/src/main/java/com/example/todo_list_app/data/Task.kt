@@ -9,9 +9,8 @@ data class Task (
     val taskId: Int,
     val taskName: String,
     val creationDate: String,
-    val taskDate: String,
-    val creationTime:String,
-    val taskTime: String,
-    val taskDescription: String,
-    val isTaskDone: Boolean
+    val taskDate: String?,
+    val taskTime: String?,
+    val taskDescription: String?,
+    val isTaskDone: Boolean = false
         )

@@ -1,15 +1,16 @@
 package com.example.todo_list_app.ui.main
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo_list_app.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 class MainFragment : Fragment() {
@@ -17,14 +18,14 @@ class MainFragment : Fragment() {
     companion object {
         fun newInstance() = MainFragment()
     }
-
+    private lateinit var newTaskButtom: FloatingActionButton
     private lateinit var viewModel: MainViewModel
     private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
@@ -32,10 +33,29 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-//       // val isLandscape = view.findViewById<FrameLayout>(R.id.) != null
         recyclerView = view.findViewById(R.id.recyclerview)
+
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-//        recyclerView.adapter = UserRVAdapter(viewModel.getAllUsers(), isLandscape)
+
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        viewModel.getAllTasks().observe(viewLifecycleOwner,Observer{
+            recyclerView.adapter= RecyclerViewAdapter(it,viewModel)
+        })
+
+
+
+
+        newTaskButtom = view.findViewById(R.id.fab)
+        newTaskButtom.setOnClickListener {
+
+            findNavController().navigate(R.id.action_mainFragment_to_newTaskFragment)
+        }
+
+//        newTaskButtom.setOnClickListener {
+//            showBottomSheetDialog()
+//        }
+
+
     }
 
 

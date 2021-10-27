@@ -5,8 +5,11 @@ import androidx.room.*
 
 @Dao
 interface TaskDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert
     suspend fun insert(task: Task)
+
+    @Query("select * From task_table ")
+    suspend fun getAllUsers() : List<Task>
 
 //    @Update()
 //    suspend fun update(task: Task)
