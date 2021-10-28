@@ -36,11 +36,10 @@ class MainFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recyclerview)
 
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-
-        recyclerView.layoutManager = LinearLayoutManager(this.context)
         viewModel.getAllTasks().observe(viewLifecycleOwner,Observer{
             recyclerView.adapter= RecyclerViewAdapter(it,viewModel)
         })
+
 
 
 
@@ -51,13 +50,14 @@ class MainFragment : Fragment() {
             findNavController().navigate(R.id.action_mainFragment_to_newTaskFragment)
         }
 
-//        newTaskButtom.setOnClickListener {
-//            showBottomSheetDialog()
-//        }
-
 
     }
 
+//    fun updateDatabase(viewModel: MainViewModel){
+//
+//    }
+
 
 }
+
 

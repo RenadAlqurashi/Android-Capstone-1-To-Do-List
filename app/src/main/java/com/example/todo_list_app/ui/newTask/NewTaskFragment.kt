@@ -64,19 +64,19 @@ class NewTaskFragment : Fragment() {
         var getTime = " "
 
         taskDateButton.setOnClickListener{
-            DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener{
+            val pickDate = DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener{
                     view, y, m, d ->
                     getDate="$d-${m+1}-$y"
-                    showDate.setText(getDate)
-            },year,month,day).show()
+                    showDate.setText(getDate) },year,month,day)
+            pickDate.datePicker.minDate= cal.timeInMillis
+            pickDate.show()
         }
 
         taskTimeButton.setOnClickListener {
-            TimePickerDialog(requireContext(),TimePickerDialog.OnTimeSetListener{
+            val pickTime =TimePickerDialog(requireContext(),TimePickerDialog.OnTimeSetListener{
                     timePicker, hour, minute ->
                     getTime = "$hour:$minute"
-                    showTime.setText(getTime.toString())
-            },hour,minute,true).show()
+                    showTime.setText(getTime.toString()) },hour,minute,false).show()
         }
 
         taskInsertButton.setOnClickListener{
@@ -94,11 +94,17 @@ class NewTaskFragment : Fragment() {
         val currentDate = sdf.format(Date())
 
         val taskTitle = taskTitle.text.toString()
-        val taskDescription = taskDescription.toString()
+        val taskDescription = taskDescription.text.toString()
         val taskDate = showDate.text.toString()
         val taskTime = showTime.text.toString()
 
-        val newTask =Task(0,taskTitle,currentDate,taskDate,taskTime,taskDescription)
+        val newTask =Task(
+            taskName= taskTitle,
+            creationDate= currentDate,
+            taskDate= taskDate,
+            taskTime= taskTime,
+            taskDescription= taskDescription
+        )
 
             viewModel.insert(newTask)
 

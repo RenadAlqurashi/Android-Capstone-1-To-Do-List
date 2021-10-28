@@ -7,10 +7,14 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.todo_list_app.ui.main.MainFragment"
-        android:label="fragment_main">
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_newTaskFragment"
             app:destination="@id/newTaskFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
     </fragment>
     <fragment
         android:id="@+id/newTaskFragment"
@@ -20,5 +24,17 @@
         <action
             android:id="@+id/action_newTaskFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editTaskFragment"
+        android:name="com.example.todo_list_app.ui.editTask.EditTaskFragment"
+        android:label="fragment_edit_task"
+        tools:layout="@layout/fragment_edit_task" >
+        <action
+            android:id="@+id/action_editTaskFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+        <argument
+            android:name="editTask_key"
+            app:argType="com.example.todo_list_app.data.Task" />
     </fragment>
 </navigation>

@@ -3,10 +3,10 @@ package com.example.todo_list_app.ui.main
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.todo_list_app.data.Repo
 import com.example.todo_list_app.data.Task
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(context: Application) : AndroidViewModel(context){
@@ -19,4 +19,17 @@ class MainViewModel(context: Application) : AndroidViewModel(context){
         }
         return tasks
     }
+
+    fun delete(task: Task){
+        viewModelScope.launch (Dispatchers.IO){
+            repo.delete(task)
+        }
+    }
+
+    fun update(task: Task){
+        viewModelScope.launch (Dispatchers.IO){
+            repo.update(task)
+        }
+    }
+
 }
