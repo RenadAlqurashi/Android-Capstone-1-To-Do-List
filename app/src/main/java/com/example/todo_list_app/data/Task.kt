@@ -14,5 +14,6 @@ data class Task (
     var creationDate: String,
     var taskDate: String?,
     var taskDescription: String?,
-    var isTaskDone: Boolean = false
+    var isTaskDone: Boolean = false,
+    var expand : Boolean = false
         ): Parcelable

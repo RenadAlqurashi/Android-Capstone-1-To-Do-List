@@ -13,38 +13,45 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo_list_app.R
 import com.example.todo_list_app.data.Task
+import com.example.todo_list_app.databinding.TestBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
 
-class RecyclerViewAdapter(private var taskList: List<Task>, private val viewModel: MainViewModel): RecyclerView.Adapter<TaskAdapter>(){
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskAdapter {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item,parent,false)
-        return TaskAdapter(view)
+class RecyclerViewAdapter(
+    private var taskList: List<Task>,
+    private val viewModel: MainViewModel
+    ): RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
+
+    inner class ViewHolder(val binding: TestBinding) : RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = TestBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: TaskAdapter, position: Int) {
-        val task = taskList[position]
-         holder.titleTextView.text = task.taskName
-         holder.dateTextView.text = task.taskDate.toString()
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        with(holder) {
+            with(taskList[position]) {
+                binding.taskTitle.text = this.taskName
+                binding.taskDate.text = this.taskDate.toString()
+                binding.taskDescription.text = this.taskDescription
 
-         holder.descriptionTextView.text = task.taskDescription
+                val sdf = SimpleDateFormat("dd/M/yyyy  hh:mm")
+                val currentDate = sdf.format(Date())
 
-        val sdf = SimpleDateFormat("dd/M/yyyy  hh:mm")
-        val currentDate = sdf.format(Date())
-
-        if (task.isTaskDone){
-            holder.isDoneCheckBox.isChecked=true
-            if(task.taskDate!! > currentDate ){
-                holder.isDoneCheckBox.setEnabled(false)
-            }
-        }
-         holder.isDoneCheckBox.setOnCheckedChangeListener { _ ,isTaskDone ->
-             task.isTaskDone = isTaskDone
-             viewModel.update(task)
-         }
-        viewModel.update(task)
-        task.isTaskDone=holder.isDoneCheckBox.isChecked
+                if (this.isTaskDone) {
+                    binding.isDoneCheckbox.isChecked = true
+                    if (this.taskDate!! > currentDate) {
+                        binding.isDoneCheckbox.setEnabled(false)
+                    }
+                }
+                binding.isDoneCheckbox.setOnCheckedChangeListener { _, isTaskDone ->
+                    this.isTaskDone = isTaskDone
+                    viewModel.update(this)
+                }
+                viewModel.update(this)
+                this.isTaskDone = binding.isDoneCheckbox.isChecked
 
 //             if (holder.isDoneCheckBox.isChecked && task.isTaskDone == true) {
 //                 task.isTaskDone = false
@@ -67,23 +74,30 @@ class RecyclerViewAdapter(private var taskList: List<Task>, private val viewMode
 //             viewModel.update(task)
 //            }
 //      notifyDataSetChanged()
-        holder.deleteButton.setOnClickListener{
-            viewModel.delete(task)
-            taskList -= task
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, getItemCount())
-        }
-        holder.updateButton.setOnClickListener{
-            val action:NavDirections = MainFragmentDirections.actionMainFragmentToEditTaskFragment(task)
-            it.findNavController().navigate(action)
-            viewModel.update(task)
-        }
+                binding.expandedView.visibility = if (this.expand) View.VISIBLE else View.GONE
 
-    }
+                binding.cardLayout.setOnClickListener {
+                    this.expand = !this.expand
+                    notifyDataSetChanged()
+                }
+                binding.taskDeleteButton.setOnClickListener {
+                    viewModel.delete(this)
+                    taskList -= this
+                    notifyItemRemoved(position)
+                    notifyItemRangeChanged(position, getItemCount())
+                }
+                binding.taskEditButton.setOnClickListener {
+                    val action: NavDirections =
+                        MainFragmentDirections.actionMainFragmentToEditTaskFragment(this)
+                    it.findNavController().navigate(action)
+                    viewModel.update(this)
+                }
 
-    override fun getItemCount(): Int {
-        return taskList.size
-    }
+//                holder.expandedView.visibility
+                //                }
+            }
+
+        }
 
 //    fun itemClicked(checkBox: CheckBox) {
 //        if (checkBox.isChecked && task.isTaskDone = true){
@@ -95,14 +109,19 @@ class RecyclerViewAdapter(private var taskList: List<Task>, private val viewMode
 //        }
 
 //    }
+    }
+    override fun getItemCount(): Int {
+        return taskList.size
+    }
 }
 
+
 class TaskAdapter(itemView: View):RecyclerView.ViewHolder(itemView) {
-    val titleTextView:TextView = itemView.findViewById(R.id.taskTitle)
-    val dateTextView:TextView = itemView.findViewById(R.id.taskDate)
-    val descriptionTextView:TextView=itemView.findViewById(R.id.taskDescription)
-    val isDoneCheckBox:CheckBox = itemView.findViewById(R.id.isDoneCheckbox)
-    val deleteButton: FloatingActionButton = itemView.findViewById(R.id.taskDeleteButton)
+//    val titleTextView:TextView = itemView.findViewById(R.id.taskTitle)
+//    val dateTextView:TextView = itemView.findViewById(R.id.taskDate)
+//    val descriptionTextView:TextView=itemView.findViewById(R.id.taskDescription)
+//    val isDoneCheckBox:CheckBox = itemView.findViewById(R.id.isDoneCheckbox)
+//    val deleteButton: FloatingActionButton = itemView.findViewById(R.id.taskDeleteButton)
     val updateButton: FloatingActionButton = itemView.findViewById(R.id.taskEditButton)
 
 }
