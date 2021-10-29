@@ -1,5 +1,6 @@
 package com.example.todo_list_app.ui.main
 
+import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.todo_list_app.R
 import com.example.todo_list_app.data.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
 
 
 class RecyclerViewAdapter(private var taskList: List<Task>, private val viewModel: MainViewModel): RecyclerView.Adapter<TaskAdapter>(){
@@ -25,11 +27,17 @@ class RecyclerViewAdapter(private var taskList: List<Task>, private val viewMode
         val task = taskList[position]
          holder.titleTextView.text = task.taskName
          holder.dateTextView.text = task.taskDate.toString()
-         holder.timeTextView.text = task.taskTime.toString()
+
          holder.descriptionTextView.text = task.taskDescription
+
+        val sdf = SimpleDateFormat("dd/M/yyyy  hh:mm")
+        val currentDate = sdf.format(Date())
 
         if (task.isTaskDone){
             holder.isDoneCheckBox.isChecked=true
+            if(task.taskDate!! > currentDate ){
+                holder.isDoneCheckBox.setEnabled(false)
+            }
         }
          holder.isDoneCheckBox.setOnCheckedChangeListener { _ ,isTaskDone ->
              task.isTaskDone = isTaskDone
@@ -92,7 +100,6 @@ class RecyclerViewAdapter(private var taskList: List<Task>, private val viewMode
 class TaskAdapter(itemView: View):RecyclerView.ViewHolder(itemView) {
     val titleTextView:TextView = itemView.findViewById(R.id.taskTitle)
     val dateTextView:TextView = itemView.findViewById(R.id.taskDate)
-    val timeTextView:TextView = itemView.findViewById(R.id.taskTime)
     val descriptionTextView:TextView=itemView.findViewById(R.id.taskDescription)
     val isDoneCheckBox:CheckBox = itemView.findViewById(R.id.isDoneCheckbox)
     val deleteButton: FloatingActionButton = itemView.findViewById(R.id.taskDeleteButton)

@@ -20,6 +20,14 @@ import com.example.todo_list_app.R
 import com.example.todo_list_app.data.Task
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
+import android.widget.DatePicker
+import android.widget.TimePicker
+
+
+
+
+
+
 
 
 class NewTaskFragment : Fragment() {
@@ -27,7 +35,6 @@ class NewTaskFragment : Fragment() {
     private lateinit var taskTitle: EditText
     private lateinit var taskDescription: EditText
     private lateinit var taskDateButton: FloatingActionButton
-    private lateinit var taskTimeButton: FloatingActionButton
     private lateinit var taskInsertButton: FloatingActionButton
     private lateinit var showDate: TextView
     private lateinit var showTime: TextView
@@ -48,35 +55,41 @@ class NewTaskFragment : Fragment() {
         taskTitle = view.findViewById(R.id.taskTitle)
         taskDescription = view.findViewById(R.id.taskDescription)
         taskDateButton = view.findViewById(R.id.setDateButton)
-        taskTimeButton = view.findViewById(R.id.setTimeButton)
         taskInsertButton = view.findViewById(R.id.taskInsertButton)
         showDate = view.findViewById(R.id.showDate)
-        showTime = view.findViewById(R.id.showTime)
 
-        val cal = Calendar.getInstance()
-        val minute = cal.get(Calendar.MINUTE)
-        val hour = cal.get(Calendar.HOUR)
-        val day = cal.get(Calendar.DAY_OF_MONTH)
-        val month = cal.get(Calendar.MONTH)
-        val year = cal.get(Calendar.YEAR)
 
-        var getDate = " "
-        var getTime = " "
+        val currentDateTime = Calendar.getInstance()
+        val startYear = currentDateTime.get(Calendar.YEAR)
+        val startMonth = currentDateTime.get(Calendar.MONTH)
+        val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
+        val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
+        val startMinute = currentDateTime.get(Calendar.MINUTE)
+        var getDate=" "
 
-        taskDateButton.setOnClickListener{
-            val pickDate = DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener{
-                    view, y, m, d ->
-                    getDate="$d-${m+1}-$y"
-                    showDate.setText(getDate) },year,month,day)
-            pickDate.datePicker.minDate= cal.timeInMillis
+        taskDateButton.setOnClickListener {
+            val pickDate=DatePickerDialog(
+                requireContext(),
+                DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                    TimePickerDialog(
+                        requireContext(),
+                        TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                            val pickedDateTime = Calendar.getInstance()
+                            pickedDateTime.set(year, month, day, hour, minute)
+                            getDate = "$day-$month-$year $hour:$minute"
+                            showDate.setText(getDate)
+                        },
+                        startHour,
+                        startMinute,
+                        false
+                    ).show()
+                },
+                startYear,
+                startMonth,
+                startDay
+            )
+            pickDate.datePicker.minDate= currentDateTime.timeInMillis
             pickDate.show()
-        }
-
-        taskTimeButton.setOnClickListener {
-            val pickTime =TimePickerDialog(requireContext(),TimePickerDialog.OnTimeSetListener{
-                    timePicker, hour, minute ->
-                    getTime = "$hour:$minute"
-                    showTime.setText(getTime.toString()) },hour,minute,false).show()
         }
 
         taskInsertButton.setOnClickListener{
@@ -96,13 +109,11 @@ class NewTaskFragment : Fragment() {
         val taskTitle = taskTitle.text.toString()
         val taskDescription = taskDescription.text.toString()
         val taskDate = showDate.text.toString()
-        val taskTime = showTime.text.toString()
 
         val newTask =Task(
             taskName= taskTitle,
             creationDate= currentDate,
             taskDate= taskDate,
-            taskTime= taskTime,
             taskDescription= taskDescription
         )
 

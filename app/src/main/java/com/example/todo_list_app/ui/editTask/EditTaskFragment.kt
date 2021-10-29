@@ -26,10 +26,8 @@ class EditTaskFragment : Fragment() {
     private lateinit var taskTitle: EditText
     private lateinit var taskDescription: EditText
     private lateinit var taskDateButton: FloatingActionButton
-    private lateinit var taskTimeButton: FloatingActionButton
     private lateinit var taskEditButton: FloatingActionButton
     private lateinit var showDate: TextView
-    private lateinit var showTime: TextView
 
 
     override fun onCreateView(
@@ -48,47 +46,40 @@ class EditTaskFragment : Fragment() {
         taskTitle = view.findViewById(R.id.taskTitle)
         taskDescription = view.findViewById(R.id.taskDescription)
         taskDateButton = view.findViewById(R.id.setDateButton)
-        taskTimeButton = view.findViewById(R.id.setTimeButton)
         taskEditButton = view.findViewById(R.id.taskEditButton_editTaskFragment)
         showDate = view.findViewById(R.id.showDate)
-        showTime = view.findViewById(R.id.showTime)
 
-        val cal = Calendar.getInstance()
-        val minute = cal.get(Calendar.MINUTE)
-        val hour = cal.get(Calendar.HOUR)
-        val day = cal.get(Calendar.DAY_OF_MONTH)
-        val month = cal.get(Calendar.MONTH)
-        val year = cal.get(Calendar.YEAR)
-
-        var getDate = " "
-        var getTime = " "
+        val currentDateTime = Calendar.getInstance()
+        val startYear = currentDateTime.get(Calendar.YEAR)
+        val startMonth = currentDateTime.get(Calendar.MONTH)
+        val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
+        val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
+        val startMinute = currentDateTime.get(Calendar.MINUTE)
+        var getDate=" "
 
         taskDateButton.setOnClickListener {
-            val pickDate = DatePickerDialog(
+            val pickDate=DatePickerDialog(
                 requireContext(),
-                DatePickerDialog.OnDateSetListener { view, y, m, d ->
-                    getDate = "$d-${m + 1}-$y"
-                    showDate.setText(getDate)
+                DatePickerDialog.OnDateSetListener { _, year, month, day ->
+                    TimePickerDialog(
+                        requireContext(),
+                        TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+                            val pickedDateTime = Calendar.getInstance()
+                            pickedDateTime.set(year, month, day, hour, minute)
+                            getDate = "$day-$month-$year $hour:$minute"
+                            showDate.setText(getDate)
+                        },
+                        startHour,
+                        startMinute,
+                        false
+                    ).show()
                 },
-                year,
-                month,
-                day
+                startYear,
+                startMonth,
+                startDay
             )
-            pickDate.datePicker.minDate = cal.timeInMillis
+            pickDate.datePicker.minDate= currentDateTime.timeInMillis
             pickDate.show()
-        }
-
-        taskTimeButton.setOnClickListener {
-            val pickTime = TimePickerDialog(
-                requireContext(),
-                TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-                    getTime = "$hour:$minute"
-                    showTime.setText(getTime.toString())
-                },
-                hour,
-                minute,
-                false
-            ).show()
         }
 
 
@@ -97,38 +88,23 @@ class EditTaskFragment : Fragment() {
         taskTitle.setText(args.editTaskKey.taskName)
         taskDescription.setText(args.editTaskKey.taskDescription)
         showDate.setText(args.editTaskKey.taskDate)
-        showTime.setText(args.editTaskKey.taskTime)
 
 
         taskEditButton.setOnClickListener {
-//            updateDataToDataBase()
+
             viewModel = ViewModelProvider(this).get(EditTaskViewModel::class.java)
 
             val sdf = SimpleDateFormat("dd/M/yyyy  hh:mm")
             val currentDate = sdf.format(Date())
 
-//            val taskTitle = taskTitle.text.toString()
-//            val taskDescription = taskDescription.text.toString()
-//            val taskDate = showDate.text.toString()
-//            val taskTime = showTime.text.toString()
 
-//            val updatedTask = Task(
-//                taskName= taskTitle,
-//                creationDate= currentDate,
-//                taskDate= taskDate,
-//                taskTime= taskTime,
-//                taskDescription= taskDescription
-//            )
             args.editTaskKey.taskName = taskTitle.text.toString()
             args.editTaskKey.taskDescription = taskDescription.text.toString()
             args.editTaskKey.taskDate = showDate.text.toString()
-            args.editTaskKey.taskTime = showTime.text.toString()
             args.editTaskKey.creationDate = currentDate.toString()
 
 
-
             viewModel.update(args.editTaskKey)
-
             findNavController().navigate(R.id.action_editTaskFragment_to_mainFragment)
         }
 

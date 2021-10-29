@@ -2,57 +2,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/newTaskFragment"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bottom_sheet_background"
+    android:orientation="vertical"
     tools:context=".ui.newTask.NewTaskFragment">
 
     <EditText
         android:id="@+id/taskTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:hint="Task Title.."
+        android:padding="20dp"
         android:textSize="20sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginBottom="10dp"
-        android:background="@color/colorDividerView"/>
+        android:background="@color/colorDividerView" />
 
     <EditText
         android:id="@+id/taskDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
         android:hint="Notes.."
-        android:textSize="18sp"/>
-    <LinearLayout
+        android:padding="20dp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/showDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text=" "
+        android:textSize="18dp" />
+
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/showDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:textSize="18dp"
-            android:text=" "/>
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/colorDividerView" />
 
-        <TextView
-            android:id="@+id/showTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:textSize="18dp"
-            android:text=" "/>
-
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -67,17 +66,10 @@
             android:src="@drawable/ic_baseline_calendar_today_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/setTimeButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:src="@drawable/ic_baseline_access_time_filled_24" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/taskInsertButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="220dp"
+            android:layout_marginStart="270dp"
             android:clickable="true"
             android:src="@drawable/ic_baseline_send_24" />
 

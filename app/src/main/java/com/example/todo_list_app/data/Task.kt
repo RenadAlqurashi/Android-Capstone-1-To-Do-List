@@ -13,7 +13,6 @@ data class Task (
     var taskName: String,
     var creationDate: String,
     var taskDate: String?,
-    var taskTime: String?,
     var taskDescription: String?,
     var isTaskDone: Boolean = false
         ): Parcelable
