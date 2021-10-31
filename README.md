@@ -22,7 +22,7 @@ Fragments:
 - NewTaskFragment -> to enable the user to add task.
 - EditTaskFragment -> to enable the user to add task.
 
-additional features:
+Additional features:
 - Room.
 - Expanded RecyclerView.
 - Elastic card View.
@@ -35,7 +35,7 @@ additional features:
 <img src="/results/screenshot_1.png" width="260">
 
 ### screenshot_2
-<img src="/screenshot_2.png" width="260">
+<img src="/results/screenshot_2.png" width="260">
 
 ### screenshot_3
 <img src="/results/screenshot_2.png" width="260">
