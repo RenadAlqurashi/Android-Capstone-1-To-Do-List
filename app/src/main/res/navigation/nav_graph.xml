@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.todo_list_app.ui.main.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_editTaskFragment"
+            app:destination="@id/editTaskFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_newTaskFragment"
+            app:destination="@id/newTaskFragment"
+            app:enterAnim="@anim/from_bottom"
+            app:exitAnim="@anim/from_top"
+            app:popEnterAnim="@anim/from_bottom"
+            app:popExitAnim="@anim/from_top" />
+    </fragment>
+    <dialog
+        android:id="@+id/newTaskFragment"
+        android:name="com.example.todo_list_app.ui.newTask.NewTaskFragment"
+        android:label="fragment_new_task"
+        tools:layout="@layout/fragment_new_task">
+        <action
+            android:id="@+id/action_newTaskFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/from_bottom"
+            app:exitAnim="@anim/from_bottom"
+            app:popEnterAnim="@anim/from_bottom"
+            app:popExitAnim="@anim/from_bottom"
+            app:popUpTo="@id/mainFragment" />
+    </dialog>
+    <dialog
+        android:id="@+id/editTaskFragment"
+        android:name="com.example.todo_list_app.ui.editTask.EditTaskFragment"
+        android:label="fragment_edit_task"
+        tools:layout="@layout/fragment_edit_task" >
+        <action
+            android:id="@+id/action_editTaskFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/from_bottom"
+            app:exitAnim="@anim/from_top"
+            app:popEnterAnim="@anim/from_bottom"
+            app:popExitAnim="@anim/from_top" />
+        <argument
+            android:name="editTask_key"
+            app:argType="com.example.todo_list_app.data.Task" />
+    </dialog>
+</navigation>
