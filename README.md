@@ -7,7 +7,6 @@
 
 ## Description
 ---
-This is my application description, what you have learned and what you, and what the ideas you have added in this app 
 
 Simple to do list app , Allow the user to add and edit task by enter title, note, due date of the task and marked the done tasks.
 Depending on the due date entered disallow the user to marked task if the task outdated.
