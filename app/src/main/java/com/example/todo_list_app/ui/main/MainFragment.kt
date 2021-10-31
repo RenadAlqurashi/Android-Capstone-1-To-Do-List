@@ -11,23 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todo_list_app.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import androidx.appcompat.app.AppCompatActivity
-
-
-
 
 
 class MainFragment : Fragment() {
 
-    //    private var _binding: FragmentMainBinding? = null
-//    private val binding get() = _binding!!
-//
-//    private lateinit var rvAdapter: RecyclerViewAdapter
-//    private lateinit var tasksList: ArrayList<Task>()
-//
-//    private lateinit var newTaskButtom: FloatingActionButton
-//    private lateinit var viewModel: MainViewModel
-//    private lateinit var recyclerView: RecyclerView
     companion object {
         fun newInstance() = MainFragment()
     }
@@ -43,6 +30,7 @@ class MainFragment : Fragment() {
     }
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
@@ -54,31 +42,17 @@ class MainFragment : Fragment() {
         })
 
 
-
-
-
         newTaskButton = view.findViewById(R.id.fab)
         newTaskButton.setOnClickListener {
 
             findNavController().navigate(R.id.action_mainFragment_to_newTaskFragment)
+
         }
 
 
     }
 
-//    fun updateDatabase(viewModel: MainViewModel){
-//
-//    }
-override fun onResume() {
-    super.onResume()
-    (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 }
 
-    override fun onStop() {
-        super.onStop()
-        (activity as AppCompatActivity?)!!.supportActionBar!!.show()
-    }
-
-}
 
 

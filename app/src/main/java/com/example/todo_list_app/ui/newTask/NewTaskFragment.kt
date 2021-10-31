@@ -3,42 +3,30 @@ package com.example.todo_list_app.ui.newTask
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import androidx.fragment.app.viewModels
+import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.todo_list_app.R
 import com.example.todo_list_app.data.Task
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
-import android.widget.DatePicker
-import android.widget.TimePicker
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
+class NewTaskFragment : BottomSheetDialogFragment() {
 
+    override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
-
-
-
-
-class NewTaskFragment : Fragment() {
     private lateinit var viewModel:NewTaskViewModel
     private lateinit var taskTitle: EditText
     private lateinit var taskDescription: EditText
-    private lateinit var taskDateButton: FloatingActionButton
-    private lateinit var taskInsertButton: FloatingActionButton
+    private lateinit var taskDateButton: ImageButton
+    private lateinit var taskInsertButton: ImageButton
     private lateinit var showDate: TextView
-    private lateinit var showTime: TextView
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +53,7 @@ class NewTaskFragment : Fragment() {
         val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
         val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
         val startMinute = currentDateTime.get(Calendar.MINUTE)
-        var getDate=" "
+        var getDate:String
 
         taskDateButton.setOnClickListener {
             val pickDate=DatePickerDialog(
@@ -76,12 +64,12 @@ class NewTaskFragment : Fragment() {
                         TimePickerDialog.OnTimeSetListener { _, hour, minute ->
                             val pickedDateTime = Calendar.getInstance()
                             pickedDateTime.set(year, month, day, hour, minute)
-                            getDate = "$day-$month-$year $hour:$minute"
+                            getDate = "$day-${month+1}-$year $hour:$minute"
                             showDate.setText(getDate)
                         },
                         startHour,
                         startMinute,
-                        false
+                        true
                     ).show()
                 },
                 startYear,
@@ -103,7 +91,7 @@ class NewTaskFragment : Fragment() {
     private fun insertDataToDataBase() {
         viewModel = ViewModelProvider(this).get(NewTaskViewModel::class.java)
 
-        val sdf = SimpleDateFormat("dd/M/yyyy  hh:mm")
+        val sdf = SimpleDateFormat("d-M-yyyy H:m")
         val currentDate = sdf.format(Date())
 
         val taskTitle = taskTitle.text.toString()
@@ -112,7 +100,6 @@ class NewTaskFragment : Fragment() {
 
         val newTask =Task(
             taskName= taskTitle,
-            creationDate= currentDate,
             taskDate= taskDate,
             taskDescription= taskDescription
         )

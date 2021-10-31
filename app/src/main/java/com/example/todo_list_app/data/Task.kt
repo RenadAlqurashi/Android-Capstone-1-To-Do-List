@@ -11,7 +11,6 @@ data class Task (
     @PrimaryKey(autoGenerate = true)
     var taskId: Int =0,
     var taskName: String,
-    var creationDate: String,
     var taskDate: String?,
     var taskDescription: String?,
     var isTaskDone: Boolean = false,
