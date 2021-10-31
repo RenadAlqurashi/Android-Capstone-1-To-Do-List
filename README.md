@@ -38,17 +38,15 @@ Additional features:
 <img src="app/src/main/res/drawable-v24/screenshot_2.png" width="260">
 
 ### screenshot_3
-<img src="app/src/main/res/drawable-v24/screenshot_2.png" width="260">
-
-
-### screenshot_3
-<img src="app/src/main/res/drawable-v24/screenshot_2.png" width="260">
+<img src="app/src/main/res/drawable-v24/screenshot_3.png" width="260">
 
 
 ### screenshot_4
-<img src="app/src/main/res/drawable-v24/screenshot_2.png" width="260">
+<img src="app/src/main/res/drawable-v24/screenshot_4.png" width="260">
 
 
 ### screenshot_5
-<img src="app/src/main/res/drawable-v24/screenshot_2.png" width="260">
+<img src="app/src/main/res/drawable-v24/screenshot_5.png" width="260">
+
+
 
